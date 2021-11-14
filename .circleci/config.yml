@@ -17,7 +17,8 @@ jobs:
       - setup_remote_docker
       - run:
           name: "docker-release-all"
-          command: "make docker-release-all"
+          # command pulled from Makefile, since no make installed on docker builder image
+          command: "DOCKER_BUILDKIT=1 docker build -t fpm  --build-arg BASE_ENV=all --build-arg TARGET=release --squash ."
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
