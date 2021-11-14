@@ -15,7 +15,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-        version: 19.03.12
+          version: 19.03.12
       - run:
           name: "docker-release-all"
           # command pulled from Makefile, since no make installed on docker builder image
