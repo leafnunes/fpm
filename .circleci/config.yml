@@ -37,7 +37,7 @@ jobs:
       - run: |
           docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
           # command pulled from Makefile, since no make installed on docker builder image
-          DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --platform linux/arm64,linux/amd64 --push -t leafnunes/fpm --build-arg BASE_ENV=minimal --build-arg TARGET=release.
+          DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --platform linux/arm64,linux/amd64 --push -t leafnunes/fpm --build-arg BASE_ENV=minimal --build-arg TARGET=release .
 
   docker-arm64:
     machine:
