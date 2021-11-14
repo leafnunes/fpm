@@ -17,9 +17,9 @@ jobs:
       - setup_remote_docker:
           version: 20.10.7
       - run:
-          name: "docker-release-all"
+          name: "docker-release-minimal"
           # command pulled from Makefile, since no make installed on docker builder image
-          command: "DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=all --build-arg TARGET=release ."
+          command: "DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=minimal --build-arg TARGET=release ."
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
