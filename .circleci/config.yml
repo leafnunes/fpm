@@ -13,8 +13,7 @@ jobs:
       - run: uname -a
       - run: echo "Hello, Arm!"
       - checkout
-      - setup_remote_docker:
-          version: 20.10.7
+      - run: docker version
       - run:
           name: "docker-release-minimal"
           command: "DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm --build-arg BASE_ENV=minimal --build-arg TARGET=release ."
@@ -42,5 +41,5 @@ jobs:
 workflows:
   docker-images-workflow:
     jobs:
-      - docker-amd64
       - docker-arm64
+#      - docker-amd64
