@@ -14,11 +14,12 @@ jobs:
       - run: echo "Hello, Arm!"
       - checkout
       - run: docker version
-      - run:
-          name: "docker-release-minimal"
-          command: "DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm --build-arg BASE_ENV=minimal --build-arg TARGET=release ."
-      - run: docker inspect leafnunes/fpm
-      
+      - run: |
+          # command pulled from Makefile, since no make installed on docker builder image
+          DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=minimal --build-arg TARGET=release .
+          echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+          docker push leafnunes/fpm
+     
   docker-amd64:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -30,11 +31,11 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 20.10.7
-      - run:
-          name: "docker-release-minimal"
+      - run: |
           # command pulled from Makefile, since no make installed on docker builder image
-          command: "DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=minimal --build-arg TARGET=release ."
-      - run: docker inspect leafnunes/fpm
+          DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=minimal --build-arg TARGET=release .
+          echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+          docker push leafnunes/fpm
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -42,4 +43,4 @@ workflows:
   docker-images-workflow:
     jobs:
       - docker-arm64
-#      - docker-amd64
+      - docker-amd64
