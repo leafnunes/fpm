@@ -42,5 +42,7 @@ jobs:
 workflows:
   docker-images-workflow:
     jobs:
-      - docker-arm64
-      - docker-amd64
+      - docker-arm64:
+          context: "docker builders"
+      - docker-amd64:
+          context: "docker builders"      
