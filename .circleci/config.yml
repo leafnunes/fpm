@@ -17,7 +17,7 @@ jobs:
       - run: |
           # command pulled from Makefile, since no make installed on docker builder image
           DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=minimal --build-arg TARGET=release .
-          echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+          docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
           docker push leafnunes/fpm
      
   docker-amd64:
@@ -34,7 +34,7 @@ jobs:
       - run: |
           # command pulled from Makefile, since no make installed on docker builder image
           DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=minimal --build-arg TARGET=release .
-          echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+          docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
           docker push leafnunes/fpm
 
 # Invoke jobs via workflows
