@@ -9,16 +9,17 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: cimg/base:2021.04
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+        version: 19.03.12
       - run:
           name: "docker-release-all"
           # command pulled from Makefile, since no make installed on docker builder image
-          command: "DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=all --build-arg TARGET=release ."
+          command: "DOCKER_BUILDKIT=1 docker build -t leafnunes/fpm  --build-arg BASE_ENV=all --build-arg TARGET=release --squash ."
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
